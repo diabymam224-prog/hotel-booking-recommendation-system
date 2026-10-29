@@ -4,25 +4,31 @@ A research-oriented hotel recommendation project built with Python, Google Colab
 
 ## Project goals
 
-This project will compare recommendation approaches and investigate how data preprocessing affects recommendation quality. Final conclusions will be based on measured experiments, not assumed results.
+This project compares recommendation approaches and investigates how preprocessing choices affect recommendation quality. Conclusions will be based on measured experiments, not assumed results.
 
-### Planned recommendation approaches
+## Selected dataset
+
+The initial dataset is [ViHoRec](https://github.com/MinhNguyenDS/ViHoRec), a public research dataset containing pseudonymous user–hotel ratings, dates, and a hotel catalogue. It covers hotels in Vietnam and the basic catalogue provides hotel names and locations. The data are marked CC BY-NC 4.0; review the license before reuse or broader deployment. See [data/README.md](data/README.md).
+
+## Planned recommendation approaches
+
 1. Popularity-based baseline
-2. Content-based recommendation using hotel features and text
-3. User-based collaborative filtering (only if the selected dataset has genuine user identifiers and interactions)
-4. Matrix factorization (only if the interaction data supports it)
+2. Content-based recommendation using hotel name/location text
+3. User-based collaborative filtering from actual user–hotel ratings
+4. Matrix factorization
 5. Hybrid recommendation combining compatible content and collaborative scores
 
-### Planned preprocessing study
+## Planned preprocessing study
+
 - Missing-value handling
 - Duplicate detection and removal
-- Outlier inspection with domain-aware rules
+- Domain-aware outlier inspection
 - Categorical feature encoding
-- Review-text normalization and TF-IDF features
+- Text normalization and TF-IDF
 
 ## Evaluation plan
 
-Ranking metrics will include NDCG@10, Precision@10, Recall@10, and Hit Rate@10 where the data supports a valid held-out user-item evaluation. Catalog coverage and inference latency may be reported as additional measures. RMSE/MAE will only be used for rating prediction tasks.
+Ranking metrics will include NDCG@10, Precision@10, Recall@10, and Hit Rate@10 when supported by a valid held-out evaluation. Catalog coverage and inference latency may be reported as additional measures. RMSE/MAE will only be used for rating prediction tasks.
 
 ## Repository structure
 
@@ -31,9 +37,9 @@ app.py
 notebooks/                 Google Colab notebook(s)
 src/                       Reusable preprocessing and evaluation code
 data/                      Dataset instructions; raw data is not committed
-artifacts/                 Instructions for model artifacts; large files are not committed
+artifacts/                 Model artifact instructions
 results/                   Measured experiment outputs
-reports/                   Methodology and final research report
+reports/                   Methodology and references
 tests/                     Unit tests
 requirements.txt
 ```
@@ -41,31 +47,22 @@ requirements.txt
 ## Getting started
 
 1. Create a Python environment (Python 3.10 or newer is recommended).
-2. Install dependencies:
+2. Install dependencies: `pip install -r requirements.txt`.
+3. Open [notebooks/hotel_recommendation_system.ipynb](notebooks/hotel_recommendation_system.ipynb) in Google Colab.
+4. Run the dataset-loading and schema-audit cells.
+5. Run the Streamlit starter locally with `streamlit run app.py`.
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Read [data/README.md](data/README.md) and choose/download the dataset.
-4. Keep raw data local or in Google Drive; do not commit large datasets or private data.
-5. Start the Streamlit interface after placing a compatible CSV in the configured data location:
-
-   ```bash
-   streamlit run app.py
-   ```
-
-The starter app will explain when data is not yet configured. It does not claim live room availability or perform bookings.
+The app currently displays a setup message and a configured CSV preview. It does not yet provide trained recommendations and does not claim live availability or booking capability.
 
 ## Research integrity
 
-- Dataset fields and licensing will be verified before model selection.
-- User-item interactions will never be fabricated to enable collaborative filtering.
-- Train/validation/test splits will be fixed and shared across comparable experiments.
-- Learned preprocessing steps will be fitted on training data only to reduce leakage.
-- Results tables must contain actual measured outputs; no scores are pre-filled.
-- Comparisons with published papers will discuss dataset and protocol differences.
+- Cite the dataset and follow its license.
+- Treat user IDs as pseudonymous keys, not real-world identities.
+- Keep train/validation/test splits consistent across comparable experiments.
+- Fit learned preprocessing steps on training data only.
+- Do not fabricate users, interactions, or results.
+- State the limitations of the dataset's limited hotel attributes and geographic coverage.
 
 ## Status
 
-**Initial scaffold created.** Dataset selection, schema validation, experiments, and deployment are still in progress.
+**Initial scaffold and dataset selection complete.** The next milestone is running the dataset audit and implementing reproducible model comparisons.
