@@ -1,31 +1,33 @@
-# Dataset instructions
+# Selected dataset: ViHoRec
 
-Do not upload raw datasets to this repository unless the dataset license explicitly permits redistribution and the files are small enough for GitHub.
+For the first implementation, use **ViHoRec — Vietnamese Hotel Recommendation Dataset**. It is a manageable public research dataset with actual user–hotel ratings, dates, and a hotel catalogue, so the planned collaborative-filtering experiments are feasible without inventing interactions.
 
-## Dataset requirements
+- Dataset repository: https://github.com/MinhNguyenDS/ViHoRec
+- Dataset descriptor: https://arxiv.org/abs/2607.12946
+- License: CC BY-NC 4.0 for the released data (non-commercial use only; review the license before reuse or broader deployment).
+- Released tables: `interactions.csv` (user_id, hotel_id, rating, date, source), `hotels.csv` (hotel_id, name, location), and `users.csv`.
+- Dataset scope: hotels in Vietnam; recommendations and conclusions must be described with that scope in mind.
 
-Before finalizing the dataset, inspect its license, schema, row count, and available identifiers. For the planned research, ideally the data should include:
+The Colab notebook downloads the released interaction and hotel CSVs from the dataset's public repository. The raw data are not copied into this project repository.
 
-- A stable hotel/item identifier
-- Hotel attributes such as name, location, rating, price, or amenities
-- Review text and/or hotel ratings
-- A stable reviewer/user identifier and user–hotel interactions if collaborative filtering is to be evaluated
+## Why this dataset
 
-## Candidate datasets to investigate
+It provides stable pseudonymous user identifiers, hotel identifiers, explicit ratings, dates, and basic hotel catalogue metadata. This supports a popularity baseline, content-based ranking from available hotel text/location, user-based collaborative filtering, matrix factorization, and a hybrid model. The catalogue has limited descriptive attributes, so content-based recommendations are constrained by hotel names and locations; document this limitation.
 
-1. **HotelRec** — hotel recommendation interactions/reviews; verify the authors' download instructions, schema, terms, and access before use.
-2. **515K Hotel Reviews Data in Europe** — useful hotel metadata and review text, but the commonly distributed schema does not provide a stable reviewer ID. It may support content-based and rating-based experiments, but should not be assumed sufficient for user-based collaborative filtering.
-3. **Expedia Hotel Recommendations** — contains user search/booking context and hotel-cluster targets, but its target is a hotel cluster rather than a directly named hotel catalogue. Confirm whether this fits the project before selecting it.
+## Local data layout
 
-## Proposed local layout
+If you choose to download the data manually, place files under `data/raw/` (this directory is ignored by Git):
 
 ```text
-data/
-  raw/          # downloaded source files; ignored by Git
-  processed/    # derived files; ignored by Git
-  README.md
+data/raw/interactions.csv
+data/raw/hotels.csv
 ```
 
-## Important
+## Data-handling and research rules
 
-Do not create synthetic user IDs or pretend that nationality is a user identifier. If a dataset lacks user-item interactions, either choose a suitable interaction dataset or revise the collaborative-filtering experiment transparently.
+- Do not commit raw data unless permitted by the dataset license and project requirements.
+- Treat user IDs as pseudonymous dataset keys, not real-world identities.
+- Verify column names and rating range in the notebook before modeling.
+- Do not fabricate interactions or user identities.
+- Split data before fitting learned transformations; use a documented, reproducible evaluation protocol.
+- This dataset is not a live hotel inventory. The app must not claim real-time room availability, current prices, or booking capability.
