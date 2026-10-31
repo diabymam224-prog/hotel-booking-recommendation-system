@@ -1,4 +1,5 @@
 from pathlib import Path
+import zipfile
 import numpy as np
 import pandas as pd
 import joblib
@@ -6,6 +7,12 @@ import streamlit as st
 
 ROOT = Path(__file__).parent
 DATA, ART, RESULTS = ROOT / "data", ROOT / "artifacts", ROOT / "results"
+
+# If the Colab export ZIP is uploaded to the repository root, unpack it on startup.
+EXPORT_ZIP = ROOT / "StayWise_Colab_Outputs.zip"
+if EXPORT_ZIP.exists() and not (DATA / "hotels_catalog.csv").exists():
+    with zipfile.ZipFile(EXPORT_ZIP) as archive:
+        archive.extractall(ROOT)
 
 st.set_page_config(page_title="StayWise | Hotel Recommendations", page_icon="🏨", layout="wide")
 
